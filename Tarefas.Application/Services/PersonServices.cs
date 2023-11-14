@@ -33,7 +33,7 @@ public class PersonServices : IPersonServices
 
     public async Task<IEnumerable<PersonDTO>> GetPersons()
     {
-        var persons = _mapper.Map<PersonDTO>(await _persistence.GetPersons());
+        var persons = _mapper.Map<IEnumerable<PersonDTO>>(await _persistence.GetPersons());
         return persons;
     }
 }
