@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  tarefas.api:
+    image: ${DOCKER_REGISTRY-}tarefasapi
+    build:
+      context: .
+      dockerfile: Tarefas.Api/Dockerfile
