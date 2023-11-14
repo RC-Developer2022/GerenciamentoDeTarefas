@@ -8,6 +8,9 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["Tarefas.Api/Tarefas.Api.csproj", "Tarefas.Api/"]
+COPY ["Tarefas.Domain/Tarefas.Domain.csproj", "Tarefas.Domain/"]
+COPY ["Tarefas.Application/Tarefas.Application.csproj", "Tarefas.Application/"]
+COPY ["Tarefas.Infrastructure/Tarefas.Infrastructure.csproj", "Tarefas.Infrastructure/"]
 RUN dotnet restore "Tarefas.Api/Tarefas.Api.csproj"
 COPY . .
 WORKDIR "/src/Tarefas.Api"

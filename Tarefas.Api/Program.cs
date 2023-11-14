@@ -1,3 +1,6 @@
+using Tarefas.Application;
+using Tarefas.infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCoreDependecyServices();
+builder.Services.AddCoreDependecyInfra();
+
 
 var app = builder.Build();
 

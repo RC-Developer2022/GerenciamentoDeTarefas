@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Xml.Linq;
 using Tarefas.Domain.Entitys;
 using Tarefas.infrastructure.Interfaces;
 
@@ -22,11 +23,16 @@ public class PersonPersistence : GeralPersistence, IPersonPersistence
 
     public async Task<Person> GetPersonByName(string name)
     {
-        throw new NotImplementedException();
+        var person = _context.Person.Where(p => p.Name.Equals(name)).FirstOrDefaultAsync();
+
+
+        return await person;
     }
 
     public async Task<IEnumerable<Person>> GetPersons()
     {
-        throw new NotImplementedException();
+        var person = _context.Person.ToArrayAsync();
+
+        return await person;
     }
 }
