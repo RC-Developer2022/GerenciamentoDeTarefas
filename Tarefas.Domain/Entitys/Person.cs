@@ -8,7 +8,7 @@ public class Person : BaseEntity
 {
     public Person()
     {
-        
+
     }
 
     public string LastName { get; set; } = string.Empty;

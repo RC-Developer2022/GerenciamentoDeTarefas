@@ -10,5 +10,10 @@ public class PersonMap : IEntityTypeConfiguration<Person>
     {
         builder.ToTable("Person");
         builder.HasKey(x => x.Id);
+        builder.Property(x => x.Name).HasMaxLength(120).IsRequired();
+        builder.Property(x => x.LastName).HasMaxLength(120).IsRequired();
+        builder.Property(x => x.Identity).HasMaxLength(9).IsRequired(); //RG
+        builder.Property(x => x.IndividualRegistration).HasMaxLength(11).IsRequired(); // CPF
+        builder.Property(x => x.DateBirth);
     }
 }

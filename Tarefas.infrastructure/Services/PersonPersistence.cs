@@ -5,7 +5,7 @@ using Tarefas.infrastructure.Interfaces;
 
 namespace Tarefas.infrastructure.Services;
 
-public class PersonPersistence : IPersonPersistence
+public sealed class PersonPersistence : IPersonPersistence
 {
     private readonly TasksDbContext _context;
     public PersonPersistence(TasksDbContext context)

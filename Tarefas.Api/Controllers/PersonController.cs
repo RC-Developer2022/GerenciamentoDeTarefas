@@ -14,6 +14,21 @@ namespace Tarefas.Api.Controllers
             _personServices = personServices;
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetPersonId(int id) 
+        {
+            try
+            {
 
+
+
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+
+                return this.StatusCode(StatusCodes.Status500InternalServerError , $"Erro ao tentar recuperar person. Erro: {ex.Message}");
+            }
+        }
     }
 }
