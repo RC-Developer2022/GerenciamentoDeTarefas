@@ -8,6 +8,7 @@ public static class InjectionServices
 {
     public static IServiceCollection AddCoreDependecyServices(this IServiceCollection services)
     {
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.AddScoped<IPersonServices , PersonServices>();
 
         return services;

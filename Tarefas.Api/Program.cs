@@ -11,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCoreDependecyServices();
 builder.Services.AddCoreDependecyInfra();
+builder.Services.AddCoreDbContext(builder.Configuration);
 
 
 var app = builder.Build();

@@ -5,12 +5,13 @@ using Tarefas.infrastructure.Interfaces;
 
 namespace Tarefas.infrastructure.Services;
 
-public class PersonPersistence : GeralPersistence, IPersonPersistence
+public class PersonPersistence : IPersonPersistence
 {
     private readonly TasksDbContext _context;
-    public PersonPersistence(TasksDbContext context) : base(context)
+    public PersonPersistence(TasksDbContext context)
     {
         _context = context;
+        _context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
     }
 
     public async Task<Person> GetPersonById(int id)

@@ -12,8 +12,6 @@ public class TasksDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-
-        modelBuilder.Entity<Person>()
-            .HasKey(p => p.Id);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(TasksDbContext).Assembly);
     }
 }
