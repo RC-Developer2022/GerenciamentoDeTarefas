@@ -5,18 +5,13 @@ using Tarefas.infrastructure.Interfaces;
 
 namespace Tarefas.infrastructure.Services;
 
-public sealed class PersonPersistence : IPersonPersistence
+public sealed class PersonPersistence(TasksDbContext context) : IPersonPersistence
 {
-    private readonly TasksDbContext _context;
-    public PersonPersistence(TasksDbContext context)
-    {
-        _context = context;
-        _context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-    }
+
 
     public async Task<Person> GetPersonById(int id)
     {
-        var person = _context.Person.Where(p => p.Id.Equals(id)).FirstOrDefaultAsync();
+        var person = context.Person.Where(p => p.Id.Equals(id)).FirstOrDefaultAsync();
 
 
         return await person;
@@ -24,7 +19,7 @@ public sealed class PersonPersistence : IPersonPersistence
 
     public async Task<Person> GetPersonByName(string name)
     {
-        var person = _context.Person.Where(p => p.Name.Equals(name)).FirstOrDefaultAsync();
+        var person = context.Person.Where(p => p.Name.Equals(name)).FirstOrDefaultAsync();
 
 
         return await person;
@@ -32,7 +27,7 @@ public sealed class PersonPersistence : IPersonPersistence
 
     public async Task<IEnumerable<Person>> GetPersons()
     {
-        var person = _context.Person.ToArrayAsync();
+        var person = context.Person.ToArrayAsync();
 
         return await person;
     }

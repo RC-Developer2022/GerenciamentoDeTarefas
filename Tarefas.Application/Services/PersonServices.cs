@@ -6,31 +6,20 @@ using Tarefas.infrastructure.Interfaces;
 
 namespace Tarefas.Application.Services;
 
-public class PersonServices : IPersonServices
+public class PersonServices(IGeralPersistence geralPersistence, IPersonPersistence personPersistence, IMapper mapper) : IPersonServices
 {
-    private readonly IGeralPersistence _geralPersistence;
-    private readonly IPersonPersistence _personPersistence;
-    private readonly IMapper _mapper;
-    public PersonServices(
-        IGeralPersistence geralPersistence ,
-        IPersonPersistence persistence ,
-        IMapper mapper)
-    {
-        _geralPersistence = geralPersistence;
-        _personPersistence = persistence;
-        _mapper = mapper;
-    }
 
     public async Task<PersonDTO> AddPerson(PersonDTO personDTO)
     {
         try
         {
-            var person = _mapper.Map<Person>(personDTO);
-            _geralPersistence.Add(person);
-            if(await _geralPersistence.SaveChangesAsync())
+            personDTO.DateBirth = Convert.ToDateTime(personDTO.DateBirth);
+            var person = mapper.Map<Person>(personDTO);
+            geralPersistence.Add(person);
+            if(await geralPersistence.SaveChangesAsync())
             {
-                var retorno = await _personPersistence.GetPersonById(person.Id);
-                return _mapper.Map<PersonDTO>(retorno);
+                var retorno = await personPersistence.GetPersonById(person.Id);
+                return mapper.Map<PersonDTO>(retorno);
             }
             return null;
         }
@@ -45,12 +34,12 @@ public class PersonServices : IPersonServices
     {
         try
         {
-            var person = await _personPersistence.GetPersonById(personDTO.Id);
-            _geralPersistence.Update(person);
-            if(await _geralPersistence.SaveChangesAsync())
+            var person = await personPersistence.GetPersonById(personDTO.Id);
+            geralPersistence.Update(person);
+            if(await geralPersistence.SaveChangesAsync())
             {
-                var retorno = await _personPersistence.GetPersonById(personDTO.Id);
-                return _mapper.Map<PersonDTO>(retorno);
+                var retorno = await personPersistence.GetPersonById(personDTO.Id);
+                return mapper.Map<PersonDTO>(retorno);
             }
 
             return null;
@@ -66,12 +55,12 @@ public class PersonServices : IPersonServices
     {
         try
         {
-            var person = await _personPersistence.GetPersonById(id);
+            var person = await personPersistence.GetPersonById(id);
             if(person == null)
                 throw new Exception("Person not found in the database");
 
-            _geralPersistence.Delete(person);
-            return await _geralPersistence.SaveChangesAsync();
+            geralPersistence.Delete(person);
+            return await geralPersistence.SaveChangesAsync();
         }
         catch(Exception ex)
         {
@@ -82,7 +71,7 @@ public class PersonServices : IPersonServices
 
     public async Task<PersonDTO> GetPersonById(int id)
     {
-        var person = _mapper.Map<PersonDTO>(await _personPersistence.GetPersonById(id));
+        var person = mapper.Map<PersonDTO>(await personPersistence.GetPersonById(id));
 
         return person;
 
@@ -90,14 +79,14 @@ public class PersonServices : IPersonServices
 
     public async Task<PersonDTO> GetPersonByName(string name)
     {
-        var person = _mapper.Map<PersonDTO>(await _personPersistence.GetPersonByName(name));
+        var person = mapper.Map<PersonDTO>(await personPersistence.GetPersonByName(name));
 
         return person;
     }
 
     public async Task<IEnumerable<PersonDTO>> GetPersons()
     {
-        var persons = _mapper.Map<IEnumerable<PersonDTO>>(await _personPersistence.GetPersons());
+        var persons = mapper.Map<IEnumerable<PersonDTO>>(await personPersistence.GetPersons());
         return persons;
 
     }

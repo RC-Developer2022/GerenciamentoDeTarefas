@@ -2,37 +2,31 @@
 
 namespace Tarefas.infrastructure.Services;
 
-public class GeralPersistence : IGeralPersistence
+public class GeralPersistence(TasksDbContext context) : IGeralPersistence
 {
-    public readonly TasksDbContext _context;
-
-    public GeralPersistence(TasksDbContext context)
-    {
-        _context = context;
-    }
 
     public void Add<T>(T entity) where T : class
     {
-        _context.AddAsync(entity);
+        context.AddAsync(entity);
     }
 
     public void Delete<T>(T entity) where T : class
     {
-        _context.Remove(entity);
+        context.Remove(entity);
     }
 
     public void DeleteRange<T>(T[] entityArray) where T : class
     {
-        _context.RemoveRange(entityArray);
+        context.RemoveRange(entityArray);
     }
 
     public async Task<bool> SaveChangesAsync()
     {
-        return (await _context.SaveChangesAsync()) > 0;
+        return (await context.SaveChangesAsync()) > 0;
     }
 
     public void Update<T>(T entity) where T : class
     {
-        _context.Update(entity);
+        context.Update(entity);
     }
 }

@@ -1,13 +1,13 @@
 ﻿using Flunt.Notifications;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.Options;
 using Tarefas.Domain.Entitys;
 
 namespace Tarefas.infrastructure;
 
-public class TasksDbContext : DbContext
+public class TasksDbContext(DbContextOptions<TasksDbContext> options) : DbContext
 {
-    public TasksDbContext(DbContextOptions<TasksDbContext> options) : base(options) { }
 
     public DbSet<Person> Person { get; set; }
 
